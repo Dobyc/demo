@@ -2,12 +2,16 @@ var data = {
     search: {
         field: [
             {
-                name: '',
-                component: '',
+                name: '星',
+                component: 'el-input',
                 ajax: {
                     url: '',
                     method: '',
                     postData: {}
+                },
+                props: {
+                    placeholder: '1231',
+                    label: 'test'
                 },
                 data: [],
                 value: '',
@@ -16,7 +20,115 @@ var data = {
                 beforeCreate: function () {},
                 beforeSubmit: function () {},
                 change: function () {}
-            }
+            },
+            {
+                name: '星2',
+                component: 'el-radio-group',
+                ajax: {
+                    url: '',
+                    method: '',
+                    postData: {}
+                },
+                props: {
+                    placeholder: '1231',
+                    label: 'test'
+                },
+                children: [
+                    {
+                        component: 'el-radio',
+                        props: {
+                            label: 1,
+                            text: '案件是否'
+                        }
+                    },
+                    {
+                        component: 'el-radio',
+                        props: {
+                            label: 2,
+                            text: '案件'
+                        }
+                    },
+                    {
+                        component: 'el-radio',
+                        props: {
+                            label: 3,
+                            text: '案件12是否'
+                        }
+                    }
+                ],
+                data: [],
+                value: [],
+                showValue: [],
+                visible: true,
+                beforeCreate: function () {},
+                beforeSubmit: function () {},
+                change: function () {}
+            },
+            {
+                name: '星3',
+                component: 'el-checkbox',
+                ajax: {
+                    url: '',
+                    method: '',
+                    postData: {}
+                },
+                props: {
+                    placeholder: '1231',
+                    label: 'test'
+                },
+                data: [],
+                value: '',
+                showValue: '',
+                visible: true,
+                beforeCreate: function () {},
+                beforeSubmit: function () {},
+                change: function () {}
+            },
+            {
+                name: '星4',
+                component: 'el-checkbox-group',
+                ajax: {
+                    url: '',
+                    method: '',
+                    postData: {}
+                },
+                props: {
+                    placeholder: '1231',
+                    label: 'test2',
+                    max: 2
+                },
+                children: [
+                    {
+                        component: 'el-checkbox',
+                        props: {
+                            label: 21,
+                            text: '案件是否',
+                            border: true
+                        }
+                    },
+                    {
+                        component: 'el-checkbox',
+                        props: {
+                            label: 22,
+                            text: '案件'
+                        }
+                    },
+                    {
+                        component: 'el-checkbox',
+                        props: {
+                            label: 23,
+                            text: '案件12是否'
+                        }
+                    }
+                ],
+                data: [],
+                value: [],
+                showValue: [],
+                visible: true,
+                beforeCreate: function () {},
+                beforeSubmit: function () {},
+                change: function () {}
+            },
         ]
     },
     result: {
@@ -83,7 +195,8 @@ var data = {
                 render: function(data){}
             }
         ]
-    }
+    },
+    insert: {}
 };
 // <!--<el-table :data="tableData3" style="width: 100%" height="250">-->
 // <!--<el-table-column fixed type="selection" width="55"></el-table-column>-->
@@ -104,7 +217,7 @@ var data = {
 var router = [{
     path: '/',
     //dataUrl: '',
-    data: {},
+    data: data,
     mixin: {}
 },{
     path: 'a',
@@ -113,14 +226,14 @@ var router = [{
     mixin: {}
 }];
 
-var vm = new Vue({
-    el: '#app2',
-    data: function () {
-        return {
-            a: 2123124
-        }
-    }
-});
+// var vm = new Vue({
+//     el: '#app2',
+//     data: function () {
+//         return {
+//             a: 2123124
+//         }
+//     }
+// });
 
 // window.onload = function(){
     var assembly = new Assembly(router);

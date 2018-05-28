@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
-        <div id="app2">{{a}}</div>
-        <div>{{a}}</div>
-        <el-container v-if="test">
+        <!--<div id="app2">{{a}}</div>-->
+        <!--<div>{{a}}</div>-->
+        <el-container class="fullHeight">
             <el-header>Header</el-header>
             <el-container>
                 <el-aside width="200px">
@@ -19,7 +20,63 @@
                         <div data-link="c">cccccccccc</div>
                     </div>
                 </el-aside>
-                <el-main>
+                <el-main v-loading="loading">
+                    <div class="result" v-if="!loading">
+                        <div class="searchField">
+                            <div v-for="item in pageData.search.field">
+                                <component v-if="item.model == undefined || item.model"
+                                           :is="item.component" v-model="item.showValue"
+                                           :placeholder="item.props.placeholder"
+                                           :type="item.props.type"
+                                           :maxlength="item.props.maxlength || 9999"
+                                           :minlength="item.props.minlength || 0"
+                                           :clearable="item.props.clearable || false"
+                                           :disabled="item.props.disabled"
+                                           :size="item.props.size"
+                                           :rows="item.props.rows || 2"
+                                           :autosize="item.props.autosize || false"
+                                           :name="item.props.name"
+                                           :readonly="item.props.readonly"
+                                           :max="item.props.max"
+                                           :min="item.props.min"
+                                           :step="item.props.step"
+                                           :resize="item.props.resize"
+                                           :autofocus="item.props.autofocus"
+                                           :form="item.props.form"
+                                           :label="item.props.label"
+                                           :tabindex="item.props.tabindex"
+                                           :text-color="item.props.textColor || '#ffffff'"
+                                           :fill="item.props.fill || '#409EFF'"
+                                           :prefix-icon="item.props.prefixIcon"
+                                           :suffix-icon="item.props.suffixIcon"
+                                           :auto-complete="item.props.autoComplete || 'off'"
+                                           :true-label="item.props.trueLabel"
+                                           :false-label="item.props.falseLabel"
+                                           :border="item.props.border"
+                                           :checked="item.props.checked"
+                                           :indeterminate="item.props.indeterminate"
+                                >
+                                    <template v-if="item.children && item.children.length">
+                                        <component v-for="childItem in item.children" :is="childItem.component"
+                                                   :label="childItem.props.label"
+                                                   :key="childItem.props.label || childItem.props.text"
+                                                   :disabled="childItem.props.disabled"
+                                                   :name="childItem.props.name"
+                                                   :border="childItem.props.border"
+                                                   :size="childItem.props.size"
+                                                   :true-label="childItem.props.trueLabel"
+                                                   :false-label="childItem.props.falseLabel"
+                                                   :checked="childItem.props.checked"
+                                        >
+                                            {{childItem.props.label}}
+                                            {{childItem.props.text}}
+                                        </component>
+                                    </template>
+                                </component>
+                                <component v-else :is="item.component"></component>
+                            </div>
+                        </div>
+                    </div>
                     <!--<el-table :data="tableData3" style="width: 100%" height="250">-->
                         <!--<el-table-column fixed type="selection" width="55"></el-table-column>-->
                         <!--<el-table-column prop="date" label="日期" width="150"></el-table-column>-->

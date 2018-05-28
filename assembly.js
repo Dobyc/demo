@@ -1,11 +1,5 @@
 ;(function () {
     var Assembly = function(routerConfig) {
-        var _data = {
-            search: {},
-            result: {},
-            insert: {},
-        };
-
         var _vm;
 
         var _routers = [];
@@ -13,8 +7,9 @@
         var _config = {};
 
         var _init = function(){
+            _initRouter();
             _initVue();
-            //_initRouter();
+            _loadData('/');
             _bindRouter();
             _hashChangeEvent();
         };
@@ -24,7 +19,12 @@
                 el: '#app',
                 data: function() {
                     return {
-                        test: true,
+                        loading: true,
+                        pageData: {
+                            search: {},
+                            insert: {},
+                            result: {}
+                        },
                         tableData3: [
                             {
                                 date: '2016-05-03',
@@ -101,16 +101,19 @@
         };
 
         var _loadData = function(path){
+            _vm.loading = true;
             var router = _getRouterByPath(path);
             if(router.dataUrl){
                 axios({
                     method: router.method || 'get',
                     url: router.dataUrl
                 }).then(function(response) {
-                    _data = response.data;
+                    _vm.loading = false;
+                    _vm.pageData = response.data;
                 });
             }else if(router.data){
-                _data = router.data;
+                _vm.loading = false;
+                _vm.pageData = router.data;
             }else{
                 throw 'router配置错误';
             }
@@ -118,14 +121,14 @@
 
         var _getRouterByPath = function(path){
             for(var a in _routers){
-                if(_routers[a].path === path){
+                console.log(_routers[a].path,path)
+                if(_routers[a].path == path){
                     return _routers[a];
                 }
             }
         };
 
         var _hashChangeEvent = function(){
-            // todo
             var windowHash = window.location.hash.replace('#','');
             // _loadData(windowHash);
             console.log('windowHash',windowHash);
