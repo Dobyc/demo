@@ -91,6 +91,80 @@
             });
         };
 
+        var _initTemplate = function(){
+            var template = `<el-container class="fullHeight">
+            <el-header>Header</el-header>
+            <el-container>
+                <el-aside width="200px">
+                    <div class="">
+                        <div data-link="a">aaaaaa</div>
+                        <div data-link="b">bbbbbbbbbbbb</div>
+                        <div data-link="c">cccccccccc</div>
+                    </div>
+                </el-aside>
+                <el-main v-loading="loading">
+                    <div class="result" v-if="!loading">
+                        <div class="searchField">
+                            <div v-for="item in pageData.search.field">
+                                <component v-if="item.model == undefined || item.model"
+                                           :is="item.component" v-model="item.showValue"
+                                           :placeholder="item.props.placeholder"
+                                           :type="item.props.type"
+                                           :maxlength="item.props.maxlength || 9999"
+                                           :minlength="item.props.minlength || 0"
+                                           :clearable="item.props.clearable || false"
+                                           :disabled="item.props.disabled"
+                                           :size="item.props.size"
+                                           :rows="item.props.rows || 2"
+                                           :autosize="item.props.autosize || false"
+                                           :name="item.props.name"
+                                           :readonly="item.props.readonly"
+                                           :max="item.props.max"
+                                           :min="item.props.min"
+                                           :step="item.props.step"
+                                           :resize="item.props.resize"
+                                           :autofocus="item.props.autofocus"
+                                           :form="item.props.form"
+                                           :label="item.props.label"
+                                           :tabindex="item.props.tabindex"
+                                           :text-color="item.props.textColor || '#ffffff'"
+                                           :fill="item.props.fill || '#409EFF'"
+                                           :prefix-icon="item.props.prefixIcon"
+                                           :suffix-icon="item.props.suffixIcon"
+                                           :auto-complete="item.props.autoComplete || 'off'"
+                                           :true-label="item.props.trueLabel"
+                                           :false-label="item.props.falseLabel"
+                                           :border="item.props.border"
+                                           :checked="item.props.checked"
+                                           :indeterminate="item.props.indeterminate"
+                                >
+                                    <template v-if="item.children && item.children.length">
+                                        <component v-for="childItem in item.children" :is="childItem.component"
+                                                   :label="childItem.props.label"
+                                                   :key="childItem.props.label || childItem.props.text"
+                                                   :disabled="childItem.props.disabled"
+                                                   :name="childItem.props.name"
+                                                   :border="childItem.props.border"
+                                                   :size="childItem.props.size"
+                                                   :true-label="childItem.props.trueLabel"
+                                                   :false-label="childItem.props.falseLabel"
+                                                   :checked="childItem.props.checked"
+                                        >
+                                            {{childItem.props.label}}
+                                            {{childItem.props.text}}
+                                        </component>
+                                    </template>
+                                </component>
+                                <component v-else :is="item.component"></component>
+                            </div>
+                        </div>
+                    </div>
+                </el-main>
+            </el-container>
+        </el-container>`;
+            return template;
+        };
+
         var _bindRouter = function(){
             var _domLinks = document.querySelectorAll('[data-link]');
             for(var i =0,len = _domLinks.length;i<len;i++){
@@ -121,7 +195,7 @@
 
         var _getRouterByPath = function(path){
             for(var a in _routers){
-                console.log(_routers[a].path,path)
+                console.log(_routers[a].path,path);
                 if(_routers[a].path == path){
                     return _routers[a];
                 }
